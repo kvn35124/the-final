@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { json } from '../utilities/api';
 
 
