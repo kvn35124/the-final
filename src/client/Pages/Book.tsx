@@ -18,6 +18,19 @@ class Book extends React.Component<BookProps, BookState> {
 
 
 
+    async handleDelete(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        event.preventDefault();
+        try {
+            let results = await json(`/api/books/${this.props.match.params.id}`, 'DELETE');
+            if(results.ok) {
+                this.props.history.push('/books');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
     async componentDidMount() {
         try {
             let results = await fetch(`/api/books/${this.props.match.params.id}`);
@@ -34,22 +47,10 @@ class Book extends React.Component<BookProps, BookState> {
     }
 
 
-    async handleDelete() {
-        event.preventDefault();
-        try {
-            let results = await json(`/api/books/${this.props.match.params.id}`, 'DELETE');
-            if(results.ok) {
-                this.props.history.push('/books');
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
 
     render() {
-        return(
-            
+        return (
             <section className="row">
                 <article className="col">
                     <div className="card border border-dark">
@@ -61,7 +62,7 @@ class Book extends React.Component<BookProps, BookState> {
                             <div className="d-flex justify-content-around">
                                 <Link to='/books' className="btn btn-primary" >Back</Link>
                                 <Link to={`/update/${this.props.match.params.id}`} className="btn btn-warning">Edit</Link>
-                                <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleDelete()} className="btn btn-danger">Delete</button>
+                                <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleDelete(e)} className="btn btn-danger">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -72,7 +73,7 @@ class Book extends React.Component<BookProps, BookState> {
 }
 
 
-interface BookProps extends RouteComponentProps<{ id: string }> {}
+interface BookProps extends RouteComponentProps<{ id: string }> { }
 
 
 interface BookState {
