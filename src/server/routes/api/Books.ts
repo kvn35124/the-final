@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        let {book} : any = await db.Books.getOne(req.params.id);
+        let [book] : any = await db.Books.getOne(req.params.id);
         res.json(book);
     } catch (error) {
         console.log(error);
